@@ -1,0 +1,31 @@
+name: Hello World Test
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  test-and-run:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v3
+
+      - name: Configurar Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Instalar dependencias
+        run: pip install -r requirements.txt || true
+
+      - name: Ejecutar pruebas
+        run: python -m unittest discover
+
+      - name: Ejecutar el script si las pruebas pasan
+        run: python hello.py
